@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.njust.ssm.mapper.ItemsMapper">
+
+  <sql id="queryItemsWhere">
+    <if test="items!=null">
+      <if test="items.name!=null and items.name!=''">
+        and name like '%${name}%'
+      </if>
+    </if>
+  </sql>
+
+  <select id="queryItems" resultType="itemsCustomer">
+    select * from items
+    <where>
+      <include refid="queryItemsWhere"/>
+    </where>
+  </select>
+  
+  <select id="findItemsById" parameterType="int" resultType="itemsCustomer">
+		select * from items where id = #{id}
+	</select>
+
+	<update id="updateItem" parameterType="items">
+		update items set name = #{name},price=#{price},detail=#{detail},createtime=#{createtime},pic=#{pic}
+		where id = #{id}
+	</update>
+
+</mapper>
